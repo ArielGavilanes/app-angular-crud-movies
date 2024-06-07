@@ -1,0 +1,146 @@
+<h1>Listado de peliculas</h1>
+<p-table [value]="movies" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID de pelicula</th>
+      <th>Nombre</th>
+      <th>Categoria</th>
+      <th>Operaciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-movie>
+    <tr>
+      <td>{{ movie.id_pelicula }}</td>
+      <td>{{ movie.nombre_pelicula }}</td>
+      <td>{{ movie.categoria_pelicula }}</td>
+      <td>
+        <p-button
+          label="Eliminar"
+          severity="danger"
+          (onClick)="deleteMovie(movie.id_pelicula)"
+        ></p-button>
+        <p-button
+          label="Ver"
+          class="ml-2"
+          (onClick)="showDialogViewOne(movie.id_pelicula)"
+        ></p-button>
+        <p-button
+          label="Editar"
+          severity="success"
+          class="ml-2"
+          (onClick)="showDialogUpdate(movie.id_pelicula)"
+        />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<div class="mt-3">
+  <p-button (click)="showDialogCreate()" label="Crear" />
+</div>
+
+<p-dialog
+  header="Añadir pelicula"
+  [modal]="true"
+  [(visible)]="visibleCreate"
+  [style]="{ width: '25rem' }"
+>
+  <span class="p-text-secondary block mb-5">Añade una pelicula.</span>
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="nombre_pelicula" class="font-semibold w-6rem"
+      >Nombre de la pelicula</label
+    >
+    <input
+      pInputText
+      id="nombre_pelicula"
+      class="flex-auto"
+      autocomplete="off"
+      [(ngModel)]="movie.nombre_pelicula"
+    />
+  </div>
+  <div class="flex align-items-center gap-3 mb-5">
+    <label for="categoria_pelicula" class="font-semibold w-6rem"
+      >Categoria</label
+    >
+    <input
+      pInputText
+      id="categoria_pelicula"
+      class="flex-auto"
+      autocomplete="off"
+      [(ngModel)]="movie.categoria_pelicula"
+    />
+  </div>
+  <div class="flex justify-content-end gap-2">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      (click)="visibleCreate = false"
+    />
+    <p-button label="Guardar" (click)="createMovie()" />
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Pelicula {{ movie.nombre_pelicula }}"
+  [modal]="true"
+  [(visible)]="visibleViewOne"
+  [style]="{ width: '25rem' }"
+>
+  <div class="align-items-center gap-3 mb-3">
+    <h2>Nombre:</h2>
+    <p>{{ movie.nombre_pelicula }}</p>
+    <h2>Categoria:</h2>
+    <p>{{ movie.categoria_pelicula }}</p>
+  </div>
+  <div class="flex justify-content-end gap-2">
+    <p-button
+      label="Cerrar"
+      severity="secondary"
+      (click)="visibleViewOne = false"
+    />
+  </div>
+</p-dialog>
+
+<p-dialog
+  header="Editar pelicula"
+  [modal]="true"
+  [(visible)]="visibleUpdate"
+  [style]="{ width: '25rem' }"
+>
+  <span class="p-text-secondary block mb-5"
+    >Actualizar pelicula {{ movie.nombre_pelicula }}</span
+  >
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="nombre_pelicula" class="font-semibold w-6rem"
+      >Actualizar nombre de la pelicula</label
+    >
+    <input
+      pInputText
+      id="nombre_pelicula"
+      class="flex-auto"
+      autocomplete="off"
+      [(ngModel)]="movie.nombre_pelicula"
+    />
+  </div>
+
+  <div class="flex align-items-center gap-3 mb-5">
+    <label for="categoria_pelicula" class="font-semibold w-6rem"
+      >Actualizar categoria de pelicula</label
+    >
+    <input
+      pInputText
+      id="categoria_pelicula"
+      class="flex-auto"
+      autocomplete="off"
+      [(ngModel)]="movie.categoria_pelicula"
+    />
+  </div>
+  <div class="flex justify-content-end gap-2">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      (click)="visibleUpdate = false"
+    />
+    <p-button label="Guardar" (click)="updateMovie(movie.id_pelicula)" />
+  </div>
+</p-dialog>
+
